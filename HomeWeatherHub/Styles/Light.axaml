@@ -1,0 +1,84 @@
+<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20" Background="{DynamicResource BackgroundColor}">
+            <!--  Add Controls for Previewer Here  -->
+            <StackPanel>
+                <TextBlock Foreground="{DynamicResource AccentTextColor}">ACCENT</TextBlock>
+                <TextBlock Foreground="{DynamicResource PrimaryTextColor}">PRIMARY</TextBlock>
+                <TextBlock Foreground="{DynamicResource SecondaryTextColor}">SECONDARY</TextBlock>
+                <Button>BUTTON</Button>
+            </StackPanel>
+        </Border>
+    </Design.PreviewWith>
+
+    <!--  Add Styles Here  -->
+
+    <!--  Base Colors  -->
+    <Styles.Resources>
+        <!--  main colors  -->
+        <Color x:Key="BackgroundColor">#FFFFFF</Color>
+
+        <!--  Text colors  -->
+        <Color x:Key="PrimaryTextColor">#333333</Color>
+        <Color x:Key="SecondaryTextColor">#999999</Color>
+        <Color x:Key="AccentTextColor">#007ACC</Color>
+
+        <!--  button colors  -->
+        <Color x:Key="ButtonBackgroundColor">#0077C8</Color>
+        <Color x:Key="ButtonForegroundColor">#FFFFFF</Color>
+        <Color x:Key="ButtonHoverBackgroundColor">#5698e4</Color>
+        <Color x:Key="ButtonHoverForegroundColor">#FFFFFF</Color>
+        <Color x:Key="ButtonPressedBackgroundColor">#5698e4</Color>
+        <Color x:Key="ButtonPressedForegroundColor">#000000</Color>
+        <Color x:Key="ButtonBorderColor">#002b49</Color>
+
+        <Color x:Key="AccentButtonColor">Orange</Color>
+    </Styles.Resources>
+
+  <Style Selector="Window">
+    <Setter Property="Background" Value="{DynamicResource BackgroundColor}"/>
+    <!-- Red background -->
+  </Style>
+
+  <!--  User control Styles  -->
+  <Style Selector="UserControl">
+    <Setter Property="Background" Value="{DynamicResource BackgroundColor}" />
+  </Style>
+
+  <!--  User control Styles  -->
+  <Style Selector="Window">
+    <Setter Property="Background" Value="{DynamicResource BackgroundColor}" />
+  </Style>
+
+
+  <Style Selector="TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}" />
+    <Setter Property="FontSize" Value="11" />
+    <Setter Property="Margin" Value="0,0,0,5" />
+  </Style>
+
+  <!--  Button Styles  -->
+  <Style Selector="Button">
+    <Setter Property="Background" Value="{DynamicResource ButtonBackgroundColor}" />
+    <Setter Property="Foreground" Value="{DynamicResource ButtonForegroundColor}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderColor}" />
+    <Setter Property="Padding" Value="10,5" />
+    <Setter Property="Margin" Value="5" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="4" />
+  </Style>
+
+  <Style Selector="Button:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ButtonHoverBackgroundColor}" />
+    <Setter Property="Foreground" Value="{DynamicResource ButtonHoverForegroundColor}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderColor}" />
+  </Style>
+
+  <Style Selector="Button:pressed /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ButtonPressedBackgroundColor}" />
+    <Setter Property="Foreground" Value="{DynamicResource ButtonPressedForegroundColor}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderColor}" />
+  </Style>
+
+</Styles>
