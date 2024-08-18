@@ -4,11 +4,10 @@ using HomeWeatherHub.ViewModels;
 
 namespace HomeWeatherHub.Views;
 
-public partial class HistoryView : UserControl
+public partial class StationsView : UserControl
 {
-    public HistoryView()
+    public StationsView()
     {
         InitializeComponent();
     }
-
 }

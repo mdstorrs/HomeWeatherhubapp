@@ -1,4 +1,4 @@
-﻿using Avalonia;
+﻿ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Themes.Fluent;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -13,107 +13,91 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using HomeWeatherHub.Models;
 using Avalonia.Controls;
+using HomeWeatherHub.Views;
+using HomeWeatherHub.Business;
+using System.Collections.ObjectModel;
+using System.Data;
+using System.ComponentModel.Design;
 
 namespace HomeWeatherHub.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
-
     public MainViewModel()
     {
         if (!Design.IsDesignMode)
         {
-            Task.Run(async () => await GetCurrent());
-            RefreshTimer.Elapsed += RefreshTimer_Elapsed;
-            RefreshTimer.Start();
+            GlobalSettings.SettingsHelper.SettingsChangedEvent += OnSettingsChanged;
+            GlobalSettings.SettingsHelper.LoadSettings();
+
         }
     }
 
-    private System.Timers.Timer RefreshTimer = new System.Timers.Timer(10000);
+    [ObservableProperty]
+    public bool _HasStationID = false;
 
     [ObservableProperty]
-    public static CurrentReport _CurrentReport = new CurrentReport();
+    public UserControl? _CurrentControl;
 
-    [ObservableProperty]
-    public static string _TempColor = "#888888";
+    public StationsView? stationsView { get; set; }
+    public CurrentView? currentView { get; set; }
+    public HistoryView? historyView { get; set; }
 
-    [ObservableProperty]
-    public static string _LastUpdate = ""; //Online (Updated 20 seconds ago)
-
-    private void RefreshTimer_Elapsed(object? sender, EventArgs e)
+    // Event handler that will be called when the event is fired
+    private void OnSettingsChanged(object? sender, EventArgs e)
     {
-        Task.Run(async () => await GetCurrent());
+        if (GlobalSettings.Settings.StationID == -1)
+            ShowStations();
+        else
+            ShowCurrent();
     }
 
     [RelayCommand]
-    public async Task GetCurrent()
+    public void ShowStations()
     {
-        // Create an instance of HttpClient
-        using (HttpClient client = new HttpClient())
+        if (stationsView == null)
         {
-            // Set the base address for the HTTP client (optional)
-            client.BaseAddress = new Uri("https://api.homeweatherhub.com");
-
-            try
+            stationsView = new StationsView()
             {
-                // Send a GET request to the specified endpoint
-                HttpResponseMessage response = await client.GetAsync("/Current/1/1/");
-
-                // Ensure the request was successful
-                response.EnsureSuccessStatusCode();
-
-                // Read the response content as a string
-                string responseData = await response.Content.ReadAsStringAsync();
-
-                CurrentReport? report = Newtonsoft.Json.JsonConvert.DeserializeObject<CurrentReport>(responseData);
-
-                if (report == null) {
-                    return;
-                }
-
-                if (report.Success == false)
-                {
-                    return;
-                }
-
-                CurrentReport = report;
-
-                decimal tempOut = 0;
-
-                if (!decimal.TryParse(report.TempOutside, out tempOut)) { return; };
-
-                if (tempOut <= 18)
-                {
-                    TempColor = "RoyalBlue";
-                }
-                else if (tempOut > 32)
-                {
-                    TempColor = "DarkRed";
-                }
-                else if (tempOut > 26)
-                {
-                    TempColor = "Chocolate";
-                }
-                else
-                {
-                    TempColor = "DarkGreen";
-                }
-
-                string lastUpdatedLabel = "";
-
-                int totalSeconds = (int)(DateTime.Now - report.LastUpdated).TotalSeconds;
-
-                lastUpdatedLabel = $"Online (Updated {totalSeconds.ToString()} seconds ago)";
-
-                LastUpdate = lastUpdatedLabel;
-
-            }
-            catch (HttpRequestException e)
-            {
-                // Handle any HTTP request exceptions
-                Console.WriteLine($"Request error: {e.Message}");
-            }
+                DataContext = new StationsViewModel()
+            };
         }
+        CurrentControl = stationsView;
+        HasStationID = (GlobalSettings.Settings.StationID != -1);
+    }
+
+    [RelayCommand]
+    public void ShowCurrent()
+    {
+        if (currentView==null)
+        {
+            currentView = new CurrentView()
+            {
+                DataContext = new CurrentViewModel()
+            };
+        }
+        CurrentControl = currentView;
+        HasStationID = (GlobalSettings.Settings.StationID != -1);
+    }
+
+    [RelayCommand]
+    public void ShowHistory()
+    {
+        if (historyView == null)
+        {
+            historyView = new HistoryView()
+            {
+                DataContext = new HistoryViewModel()
+            };
+        }
+        CurrentControl = historyView;
+        HasStationID = (GlobalSettings.Settings.StationID != -1);
+    }
+
+    [RelayCommand]
+    public void ShowSettings()
+    {
+
     }
 
 }

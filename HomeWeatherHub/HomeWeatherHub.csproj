@@ -9,6 +9,14 @@
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
 
+  <!--<ItemGroup>
+    <AvaloniaXaml Remove="Views\StationsView.axaml" />
+  </ItemGroup>-->
+
+  <!--<ItemGroup>
+    <AvaloniaXaml Remove="Views\CurrentView.axaml" />
+  </ItemGroup>-->
+
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
@@ -21,33 +29,37 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Include="Views\CurrentView.axaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StationsView.axaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\HistoryView.axaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\StationsView.axaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
 
-  <!--<ItemGroup>
-    <Page Include="Views\SettingsView.axaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SalesGridView.axaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\MainLayoutView.axaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\TitleBarView.axaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\MainMenuView.axaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>-->
+  <ItemGroup>
+    <Compile Update="Views\CurrentView.axaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>CurrentView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\StationsView.axaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>StationsView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\HistoryView.axaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>HistoryView.axaml</DependentUpon>
+    </Compile>    
+  </ItemGroup>
 
 </Project>

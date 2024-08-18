@@ -13,6 +13,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using HomeWeatherHub.Models;
 using Avalonia.Controls;
+using System.Diagnostics.Metrics;
+using System.Globalization;
 
 namespace HomeWeatherHub.ViewModels;
 
@@ -23,16 +25,40 @@ public partial class HistoryViewModel : ObservableObject
     {
         if (!Design.IsDesignMode)
         {
-
+            Task.Run(async () => await GetReport());
         }
+    }
+
+    private int CurrentID;
+    private int AddDate = 0;
+    private DateTime FromDate = DateTime.Now.Date;
+    private DateTime ToDate = DateTime.Now.Date.AddDays(1);
+
+    private enum dateMode : int
+    {
+        day,
+        week,
+        month,
+        year,
+        all
     }
 
     [ObservableProperty]
     public static HistoryReport _HistoryReport = new HistoryReport();
 
+    [ObservableProperty]
+    public static string _DateRangeLabelText = "Today";
+
+    [RelayCommand]
+    public void Back() 
+    {
+        AddDate += 1;
+        GetDateRange();
+    }
+
     [RelayCommand]
     public async Task GetReport()
-    {
+    { 
         // Create an instance of HttpClient
         using (HttpClient client = new HttpClient())
         {
@@ -41,8 +67,12 @@ public partial class HistoryViewModel : ObservableObject
 
             try
             {
+
+                DateTime date = DateTime.Now;
+                string dateString = date.ToString("yyyy-MM-dd");
+
                 // Send a GET request to the specified endpoint
-                HttpResponseMessage response = await client.GetAsync("/History/1/1/1/1/1/");
+                HttpResponseMessage response = await client.GetAsync($"/History/1/1/{dateString}/1");
 
                 // Ensure the request was successful
                 response.EnsureSuccessStatusCode();
@@ -93,5 +123,92 @@ public partial class HistoryViewModel : ObservableObject
             }
         }
     }
+
+    private void GetDateRange()
+    {
+
+        int addDate = this.AddDate; //The number of days back from this date.
+        dateMode mode = dateMode.day; //Day, Week, Month, Year, All
+
+        //mode = int.Parse(this.ddlRange.SelectedValue);
+        //if (int.TryParse(Master.Request.QueryString["add"], out addDate)) { this.AddDate = addDate; } else { this.AddDate = 0; }
+
+
+        switch (mode)
+        {
+            case dateMode.week:
+                DateTime day = this.ToDate = DateTime.Now.Date.AddDays(-(addDate * 7) + 1);
+                this.FromDate = GetWSWeek(day);
+                this.ToDate = this.FromDate.AddDays(7);
+                DateRangeLabelText = $"{this.FromDate.ToShortDateString()} to {this.ToDate.AddDays(-1).ToShortDateString()}";
+                break;
+            case dateMode.month:
+                DateTime thisMonthStart = DateTime.Now.Date.AddDays(-(DateTime.Now.Day - 1));
+                this.FromDate = thisMonthStart.AddMonths(-(addDate));
+                this.ToDate = this.FromDate.AddMonths(1);
+                DateTimeFormatInfo dtfi = CultureInfo.GetCultureInfo("en-US").DateTimeFormat;
+                DateRangeLabelText = $"{dtfi.GetMonthName(this.FromDate.Month)} {this.FromDate.Year}";
+                break;
+            case dateMode.year:
+                this.ToDate = new DateTime(DateTime.Now.Date.AddYears(-(addDate) + 1).Date.Year, 1, 1);
+                this.FromDate = this.ToDate.AddYears(-1);
+                DateRangeLabelText = $"{this.FromDate.Year}";
+                break;
+            case dateMode.all:
+                this.FromDate = new DateTime(2000, 1, 1);
+                this.ToDate = DateTime.Now.Date.AddDays(1);
+                DateRangeLabelText = "All Time";
+                break;
+            default:
+                this.ToDate = DateTime.Now.Date.AddDays(-(addDate) + 1);
+                this.FromDate = this.ToDate.AddDays(-1);
+                if (addDate == 0)
+                {
+                    DateRangeLabelText = "Today";
+                }
+                else
+                {
+                    DateRangeLabelText = $"{this.FromDate.ToShortDateString()}";
+                }
+                break;
+        }
+
+        //Unhide this to see the proper date range
+        //this.lblDateRange.Text = $"{this.FromDate.ToShortDateString()} to {this.ToDate.AddDays(-1).ToShortDateString()}";
+
+        //Set the post back urls for the next and previous buttons
+        this.SetButtonPostBackUrls();
+
+        //Onlye enable the next button when required
+        //if (this.AddDate == 0) { btnNext.Enabled = false; } else { btnNext.Enabled = true; }
+
+    }
+
+    private void SetButtonPostBackUrls()
+    {
+
+        //btnPrevious.PostBackUrl = $"History.aspx?id={this.CurrentID}&add={this.AddDate + 1}&mode={int.Parse(this.ddlRange.SelectedValue)}";
+        //btnNext.PostBackUrl = $"History.aspx?id={this.CurrentID}&add={this.AddDate - 1}&mode={int.Parse(this.ddlRange.SelectedValue)}";
+
+    }
+
+    public static DateTime GetWSWeek(DateTime someDate)
+    {
+        int dow;
+        if ((int)someDate.DayOfWeek == 0)
+        {
+            dow = 7;
+        }
+        else
+        {
+            dow = (int)someDate.DayOfWeek;
+        }
+
+        DateTime fromDate = someDate.AddDays(-(dow - 1)).Date;
+
+        return fromDate;
+
+    }
+
 
 }

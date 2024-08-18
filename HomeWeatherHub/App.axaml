@@ -5,12 +5,8 @@
     RequestedThemeVariant="Default">
     <!--  "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options.  -->
 
-    <Application.Styles>
-        <FluentTheme />
-      <StyleInclude Source="avares://HomeWeatherHub/Styles/Light.axaml" />
-      <StyleInclude Source="avares://HomeWeatherHub/Styles/Dark.axaml" />      
-    </Application.Styles>
-
-
+  <Application.Styles>
+    <FluentTheme />
+  </Application.Styles>
 
 </Application>

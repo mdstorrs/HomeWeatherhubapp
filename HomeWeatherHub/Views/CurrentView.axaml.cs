@@ -4,9 +4,9 @@ using HomeWeatherHub.ViewModels;
 
 namespace HomeWeatherHub.Views;
 
-public partial class HistoryView : UserControl
+public partial class CurrentView : UserControl
 {
-    public HistoryView()
+    public CurrentView()
     {
         InitializeComponent();
     }

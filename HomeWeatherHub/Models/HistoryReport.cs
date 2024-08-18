@@ -10,10 +10,10 @@ namespace HomeWeatherHub.Models
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string OutsideTemperatureMin { get; set; } = "";
-        public string OutsideTemperatureMax { get; set; } = "";
-        public string InsideTemperatureMin { get; set; } = "";
-        public string InsideTemperatureMax { get; set; } = "";
+        public string OutsideTemperatureMin { get; set; } = "...";
+        public string OutsideTemperatureMax { get; set; } = "...";
+        public string InsideTemperatureMin { get; set; } = "...";
+        public string InsideTemperatureMax { get; set; } = "...";
         public string TotalRain { get; set; } = "";
         public string RainRateMax { get; set; } = "";
         public string WindSpeedMax { get; set; } = "";
