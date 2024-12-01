@@ -10,8 +10,13 @@
     d:DesignHeight="950"
     d:DesignWidth="600"
     Icon="/Assets/avalonia-logo.ico"
-    mc:Ignorable="d" >
+    mc:Ignorable="d"
+    RequestedThemeVariant="Dark" >
     <views:MainView />
-
+  <!--<ComboBox SelectedIndex="0" BorderThickness="1"  BorderBrush="Black" Foreground="Black" Background="Blue" Height="40">
+    <ComboBoxItem>Item 1</ComboBoxItem>
+    <ComboBoxItem>Item 2</ComboBoxItem>
+    <ComboBoxItem>Item 3</ComboBoxItem>
+  </ComboBox>-->
 </Window>
 

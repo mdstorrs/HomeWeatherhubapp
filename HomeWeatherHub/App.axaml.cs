@@ -59,23 +59,24 @@ public partial class App : Application
 
     private void SetTheme()
     {
-        var platformSettings = Avalonia.Application.Current.PlatformSettings;
-        var isDarkMode = platformSettings?.GetColorValues().ThemeVariant == PlatformThemeVariant.Dark;
 
-        if (isDarkMode)
-        {
-            // Load Dark Theme
-            this.Styles[0] = new StyleInclude(new Uri("avares://HomeWeatherHub/"))
-            {
-                Source = new Uri("avares://HomeWeatherHub/Styles/Dark.axaml")
-            };
-        }
-        else
+        var platformSettings = Avalonia.Application.Current.PlatformSettings;
+        var isLightMode = platformSettings?.GetColorValues().ThemeVariant == PlatformThemeVariant.Light;
+
+        if (isLightMode)
         {
             // Load Light Theme
             this.Styles[0] = new StyleInclude(new Uri("avares://HomeWeatherHub/"))
             {
                 Source = new Uri("avares://HomeWeatherHub/Styles/Light.axaml")
+            };
+        }
+        else
+        {
+            // Load Dark Theme
+            this.Styles[0] = new StyleInclude(new Uri("avares://HomeWeatherHub/"))
+            {
+                Source = new Uri("avares://HomeWeatherHub/Styles/Dark.axaml")
             };
         }
     }

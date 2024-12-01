@@ -18,36 +18,39 @@
 
     <DockPanel>
 
-        <Border HorizontalAlignment="Stretch" DockPanel.Dock="Bottom">
-            <DockPanel Background="{DynamicResource MMBackgroundColor}">
+        <Border Classes="MainMenu"
+            DockPanel.Dock="Bottom">
+            <Grid Background="{DynamicResource MMBackgroundColor}" 
+                  ColumnDefinitions="*,*,*,*"
+                  Height="80">
                 <Button
                     x:Name="HomeButton"
-                    Width="100"
+                    Grid.Column="0"
                     Height="75"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Bottom"
-                    Classes="gray"
+                    Classes="MainMenu"
                     Command="{Binding ShowStationsCommand}"
                     Content="Home"
                     DockPanel.Dock="Left" />
                 <Button
                     x:Name="CurrentButton"
-                    Width="100"
+                    Grid.Column="1"
                     Height="75"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Bottom"
-                    Classes="gray"
+                    Classes="MainMenu"
                     Command="{Binding ShowCurrentCommand}"
                     Content="Current"
                     DockPanel.Dock="Left"
                     IsVisible="{Binding HasStationID}" />
                 <Button
                     x:Name="HistoryButton"
-                    Width="100"
+                    Grid.Column="2"
                     Height="75"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Bottom"
-                    Classes="gray"
+                    Classes="MainMenu"
                     Command="{Binding ShowHistoryCommand}"
                     Content="History"
                     DockPanel.Dock="Left"
@@ -55,16 +58,16 @@
                 <Border HorizontalAlignment="Stretch" />
                 <Button
                     x:Name="SettingsButton"
-                    Width="100"
+                    Grid.Column="3"
                     Height="75"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Bottom"
-                    Classes="gray"
+                    Classes="MainMenu"
                     Command="{Binding ShowSettingsCommand}"
                     Content="Settings"
                     DockPanel.Dock="Right" />
                 <Panel />
-            </DockPanel>
+            </Grid>
         </Border>
         <ScrollViewer>
             <StackPanel x:Name="MainPanel">

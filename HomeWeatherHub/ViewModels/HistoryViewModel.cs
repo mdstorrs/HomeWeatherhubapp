@@ -15,6 +15,9 @@ using HomeWeatherHub.Models;
 using Avalonia.Controls;
 using System.Diagnostics.Metrics;
 using System.Globalization;
+using HomeWeatherHub.Business;
+using System.Collections.ObjectModel;
+using Avalonia.Data;
 
 namespace HomeWeatherHub.ViewModels;
 
@@ -23,6 +26,7 @@ public partial class HistoryViewModel : ObservableObject
     
     public HistoryViewModel() 
     {
+
         if (!Design.IsDesignMode)
         {
             Task.Run(async () => await GetReport());
@@ -49,11 +53,24 @@ public partial class HistoryViewModel : ObservableObject
     [ObservableProperty]
     public static string _DateRangeLabelText = "Today";
 
+    [ObservableProperty]
+    public static bool _NextEnabled = false;
+
+    [ObservableProperty]
+    private string _SelectedOption;
+
     [RelayCommand]
-    public void Back() 
+    public async Task Back() 
     {
         AddDate += 1;
-        GetDateRange();
+        await GetReport();
+    }
+
+    [RelayCommand]
+    public async Task Next()
+    {
+        AddDate -= 1;
+        await GetReport();
     }
 
     [RelayCommand]
@@ -68,11 +85,20 @@ public partial class HistoryViewModel : ObservableObject
             try
             {
 
-                DateTime date = DateTime.Now;
+                GetDateRange();
+
+                //Report. Day, Week, Month, year etc
+                int rep = 1;
+
+                //Measurement System
+                BaseReport.MeasurementSystem ms = BaseReport.MeasurementSystem.Metric;
+                int msInt = (int)ms;
+
+                DateTime date = this.FromDate;
                 string dateString = date.ToString("yyyy-MM-dd");
 
                 // Send a GET request to the specified endpoint
-                HttpResponseMessage response = await client.GetAsync($"/History/1/1/{dateString}/1");
+                HttpResponseMessage response = await client.GetAsync($"/History/{GlobalSettings.Settings.StationID}/{rep}/{dateString}/{msInt}");
 
                 // Ensure the request was successful
                 response.EnsureSuccessStatusCode();
@@ -180,7 +206,7 @@ public partial class HistoryViewModel : ObservableObject
         this.SetButtonPostBackUrls();
 
         //Onlye enable the next button when required
-        //if (this.AddDate == 0) { btnNext.Enabled = false; } else { btnNext.Enabled = true; }
+        if (this.AddDate == 0) { NextEnabled = false; } else { NextEnabled = true; }
 
     }
 

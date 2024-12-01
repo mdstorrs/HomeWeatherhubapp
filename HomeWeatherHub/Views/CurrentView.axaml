@@ -11,6 +11,7 @@
     x:DataType="vm:CurrentViewModel"
     Background="{DynamicResource BackgroundColor}"
     mc:Ignorable="d">
+
     <Design.DataContext>
         <!--
             This only sets the DataContext for the previewer in an IDE,
@@ -18,303 +19,272 @@
         -->
         <vm:CurrentViewModel />
     </Design.DataContext>
+
     <UserControl.DataContext>
         <vm:CurrentViewModel />
     </UserControl.DataContext>
-    <ScrollViewer>
-        <StackPanel
-            MinWidth="300"
-            MaxWidth="600"
-            Margin="30">
+
+    <ScrollViewer Padding="0,8,0,8">
+        <StackPanel MinWidth="300" MaxWidth="600">
+          <Border
+              Grid.Row="0"
+              Grid.Column="1"
+              Padding="0,12,0,10"
+              Classes="Section">
+            <Grid
+                Margin="0,0,0,0"
+                ColumnDefinitions="*"
+                RowDefinitions="Auto">
+              <TextBlock
+                  Grid.Row="0"
+                  Grid.Column="1"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Classes="Heading"
+                  Text="{Binding CurrentReport.WSName}" />
+            </Grid>
+          </Border>
             <Border
                 Grid.Row="0"
                 Grid.Column="1"
-                BorderBrush="Gray"
-                BorderThickness="1"
-                CornerRadius="6">
-                <Grid
-                    Margin="0,0,0,0"
-                    ColumnDefinitions="Auto,*,Auto"
-                    RowDefinitions="Auto">
-                    <Button
-                        x:Name="HamburgerButton"
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Width="40"
-                        Height="40"
-                        Margin="3"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Top"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        Background="{DynamicResource BackgroundColor}"
-                        BorderThickness="0"
-                        Content="☰"
-                        CornerRadius="0"
-                        FontSize="24"
-                        Foreground="Orange" />
+                Classes="Section">
+                <StackPanel>
                     <TextBlock
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Margin="0,10,0,10"
+                        Margin="0,0,0,0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        FontSize="22"
+                        FontSize="14"
                         Foreground="{DynamicResource AccentTextColor}"
-                        Text="{Binding CurrentReport.WSName}" />
-                    <Button
-                        x:Name="RefreshButton"
-                        Grid.Row="0"
-                        Grid.Column="2"
-                        Width="40"
-                        Height="40"
-                        Margin="3"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Top"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        Background="{DynamicResource BackgroundColor}"
-                        BorderThickness="0"
-                        Command="{Binding GetReportCommand}"
-                        CornerRadius="0"
-                        FontSize="24"
-                        Foreground="Orange">
-                        <Image
-                            Width="28"
-                            Height="28"
-                            Source="avares://HomeWeatherHub/Assets/Refresh.png" />
-                    </Button>
-                </Grid>
+                        Text="Current Conditions" />
+                    <TextBlock
+                        Margin="0,5,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="9"
+                        Text="{Binding LastUpdate}" />
+                    <Grid
+                        Margin="0,0,0,-10"
+                        HorizontalAlignment="Center"
+                        ColumnDefinitions="Auto,Auto,Auto"
+                        RowDefinitions="Auto">
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Bottom"
+                            FontSize="64"
+                            Foreground="{Binding TempColor}"
+                            Text="{Binding CurrentReport.TempOutside}" />
+                        <TextBlock
+                            Grid.Column="1"
+                            VerticalAlignment="Bottom"
+                            FontSize="48"
+                            Text="°" />
+                        <TextBlock
+                            Grid.Column="2"
+                            Padding="0,0,0,10"
+                            VerticalAlignment="Bottom"
+                            FontSize="20"
+                            Text="{Binding CurrentReport.MeasurementSymbol}" />
+                    </Grid>
+                    <Grid
+                        HorizontalAlignment="Center"
+                        ColumnDefinitions="Auto,Auto"
+                        RowDefinitions="Auto">
+                        <TextBlock
+                            Grid.Column="0"
+                            Padding="0,0,2,0"
+                            VerticalAlignment="Center"
+                            Text="Humidity" />
+                        <TextBlock
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Text="{Binding CurrentReport.HumidityOutside}" />
+                    </Grid>
+                </StackPanel>
             </Border>
-            <Border
-                Grid.Row="0"
-                Grid.Column="1"
-                Margin="0,20,0,0"
-                Padding="40,25,40,10"
-                BorderBrush="Gray"
-                BorderThickness="1"
-                CornerRadius="6">
-              <StackPanel>
-                <TextBlock
-                    Margin="0,0,0,0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="14"
-                    Text="Current Conditions" />
-                <TextBlock
-                    Margin="0,5,0,0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="9"
-                    Text="{Binding LastUpdate}" />
-                <Grid
-                    Margin="0,0,0,15"
-                    HorizontalAlignment="Center"
-                    ColumnDefinitions="Auto,Auto,Auto"
-                    RowDefinitions="Auto">
-                    <TextBlock
-                        Grid.Column="0"
-                        VerticalAlignment="Bottom"
-                        FontSize="64"
-                        Foreground="{Binding TempColor}"
-                        Text="{Binding CurrentReport.TempOutside}" />
-                    <TextBlock
-                        Grid.Column="1"
-                        VerticalAlignment="Bottom"
-                        FontSize="48"
-                        Text="°" />
-                    <TextBlock
-                        Grid.Column="2"
-                        Padding="0,0,0,10"
-                        VerticalAlignment="Bottom"
-                        FontSize="20"
-                        Text="{Binding CurrentReport.MeasurementSymbol}" />
-                </Grid>
-                <Grid
-                    Margin="0,-25,0,15"
-                    HorizontalAlignment="Center"
-                    ColumnDefinitions="Auto,Auto"
-                    RowDefinitions="Auto">
-                    <TextBlock
-                        Grid.Column="0"
-                        Padding="0,0,2,0"
-                        VerticalAlignment="Center"
-                        Text="Humidity" />
-                    <TextBlock
-                        Grid.Column="1"
-                        VerticalAlignment="Center"
-                        Text="{Binding CurrentReport.HumidityOutside}" />
-                </Grid>
-                <Grid
-                    Margin="0,0,0,15"
-                    ColumnDefinitions="*, Auto"
-                    RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
-                    <TextBlock
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Margin="0,5,0,10"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Foreground="{DynamicResource AccentTextColor}"
-                        Text="RAIN" />
-                    <TextBlock
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Text="" />
-                    <TextBlock
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="RATE" />
-                    <TextBlock
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Text="{Binding CurrentReport.RainRate}" />
-                    <TextBlock
-                        Grid.Row="2"
-                        Grid.Column="0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="ACCUM." />
-                    <TextBlock
-                        Grid.Row="2"
-                        Grid.Column="1"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Text="{Binding CurrentReport.RainAccumulation}" />
-                    <TextBlock
-                        Grid.Row="3"
-                        Grid.Column="0"
-                        Margin="0,15,0,10"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Foreground="{DynamicResource AccentTextColor}"
-                        Text="WIND" />
-                    <TextBlock
-                        Grid.Row="3"
-                        Grid.Column="1"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Text="" />
-                    <TextBlock
-                        Grid.Row="4"
-                        Grid.Column="0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="DIRECTION" />
-                    <TextBlock
-                        Grid.Row="4"
-                        Grid.Column="1"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Text="{Binding CurrentReport.WindDirection}" />
-                    <TextBlock
-                        Grid.Row="5"
-                        Grid.Column="0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="SPEED" />
-                    <TextBlock
-                        Grid.Row="5"
-                        Grid.Column="1"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Text="{Binding CurrentReport.WindSpeed}" />
-                    <TextBlock
-                        Grid.Row="6"
-                        Grid.Column="0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="GUSTS" />
-                    <TextBlock
-                        Grid.Row="6"
-                        Grid.Column="1"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Text="{Binding CurrentReport.WindGust}" />
-                    <TextBlock
-                        Grid.Row="7"
-                        Grid.Column="0"
-                        Margin="0,15,0,10"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Foreground="{DynamicResource AccentTextColor}"
-                        Text="INSIDE" />
-                    <TextBlock
-                        Grid.Row="7"
-                        Grid.Column="1"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Text="" />
-                    <TextBlock
-                        Grid.Row="8"
-                        Grid.Column="0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="TEMP" />
-                    <TextBlock
-                        Grid.Row="8"
-                        Grid.Column="1"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Text="{Binding CurrentReport.TempInside}" />
-                    <TextBlock
-                        Grid.Row="9"
-                        Grid.Column="0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="HUMIDTY" />
-                    <TextBlock
-                        Grid.Row="9"
-                        Grid.Column="1"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Text="{Binding CurrentReport.HumidityInside}" />
-                    <TextBlock
-                        Grid.Row="10"
-                        Grid.Column="0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="" />
-                    <TextBlock
-                        Grid.Row="10"
-                        Grid.Column="1"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="" />
-                    <TextBlock
-                        Grid.Row="11"
-                        Grid.Column="0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="PRESSURE" />
-                    <TextBlock
-                        Grid.Row="11"
-                        Grid.Column="1"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Text="{Binding CurrentReport.Pressure}" />
-                    <TextBlock
-                        Grid.Row="12"
-                        Grid.Column="0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Text="UV INDEX" />
-                    <TextBlock
-                        Grid.Row="12"
-                        Grid.Column="1"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Text="{Binding CurrentReport.UVIndex}" />
-                </Grid>
-              </StackPanel>
+            <Border Classes="Section">
+                <StackPanel>
+                    <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto,Auto,Auto">
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource AccentTextColor}"
+                            Text="RAIN" />
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Text="" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="RATE" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Text="{Binding CurrentReport.RainRate}" />
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="ACCUM." />
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Text="{Binding CurrentReport.RainAccumulation}" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+            <Border Classes="Section">
+                <StackPanel>
+                    <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto,Auto,Auto,Auto">
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource AccentTextColor}"
+                            Text="WIND" />
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Text="" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="DIRECTION" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Text="{Binding CurrentReport.WindDirection}" />
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="SPEED" />
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Text="{Binding CurrentReport.WindSpeed}" />
+                        <TextBlock
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="GUSTS" />
+                        <TextBlock
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Text="{Binding CurrentReport.WindGust}" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+            <Border Classes="Section">
+                <StackPanel>
+                    <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto,Auto,Auto">
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource AccentTextColor}"
+                            Text="INSIDE" />
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Text="" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="TEMP" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Text="{Binding CurrentReport.TempInside}" />
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="HUMIDTY" />
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Text="{Binding CurrentReport.HumidityInside}" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+            <Border Classes="Section">
+                <StackPanel>
+                    <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto,Auto,Auto">
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource AccentTextColor}"
+                            Text="MISC" />
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Text="" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="PRESSURE" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Text="{Binding CurrentReport.Pressure}" />
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="UV INDEX" />
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Text="{Binding CurrentReport.UVIndex}" />
+                    </Grid>
+                </StackPanel>
             </Border>
         </StackPanel>
     </ScrollViewer>
-
 </UserControl>

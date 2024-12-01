@@ -25,60 +25,52 @@
             x:Name="lblStations"
             Margin="0,20,0,20"
             HorizontalAlignment="Center"
-            FontSize="22"
+            Classes="Heading"
             Foreground="{DynamicResource AccentTextColor}"
             Text="Local Weather Stations" />
-      <Button
-          Classes="gray"
-            Width="250"
-            HorizontalAlignment="Center"
+        <Button
+            MaxWidth="600"
+            HorizontalAlignment="Stretch"
+            Classes="FullWidth"
             Command="{Binding ChangeStationCommand}"
             CommandParameter="2">
             <StackPanel>
                 <TextBlock
                     x:Name="lblStation1"
-                    Margin="0,10,0,0"
                     HorizontalAlignment="Center"
                     Foreground="{DynamicResource AccentTextColor}"
-                    Text="Bowerbird" />
+                    Text="BOWERBIRD" />
                 <TextBlock
                     x:Name="lblStation1Addess"
                     HorizontalAlignment="Center"
-                    FontSize="14"
-                    Foreground="{DynamicResource ButtonForegroundColor}"
                     Text="Cashmere QLD, Australia" />
                 <TextBlock
                     x:Name="lblStation1Coords"
                     HorizontalAlignment="Center"
                     FontSize="10"
-                    Foreground="{DynamicResource ButtonForegroundColor}"
                     Text="-27.29125, 152.93518" />
             </StackPanel>
         </Button>
         <Button
-            Classes="gray"
-            Width="250"
-            HorizontalAlignment="Center"
+            MaxWidth="600"
+            HorizontalAlignment="Stretch"
+            Classes="FullWidth"
             Command="{Binding ChangeStationCommand}"
             CommandParameter="1">
             <StackPanel>
                 <TextBlock
                     x:Name="lblStation2"
-                    Margin="0,10,0,0"
                     HorizontalAlignment="Center"
                     Foreground="{DynamicResource AccentTextColor}"
-                    Text="Casa di Storrs" />
+                    Text="CASA DI STORRS" />
                 <TextBlock
                     x:Name="lblStation2Addess"
                     HorizontalAlignment="Center"
-                    FontSize="14"
-                    Foreground="{DynamicResource ButtonForegroundColor}"
                     Text="Dayboro QLD, Australia" />
                 <TextBlock
                     x:Name="lblStation2Coords"
                     HorizontalAlignment="Center"
                     FontSize="10"
-                    Foreground="{DynamicResource ButtonForegroundColor}"
                     Text="-27.18508, 152.81764" />
             </StackPanel>
         </Button>

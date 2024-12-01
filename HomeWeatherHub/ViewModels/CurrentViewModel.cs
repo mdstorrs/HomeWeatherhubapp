@@ -15,6 +15,8 @@ using HomeWeatherHub.Models;
 using Avalonia.Controls;
 using HomeWeatherHub.Business;
 using CommunityToolkit.Mvvm.Messaging;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace HomeWeatherHub.ViewModels;
 
@@ -30,6 +32,9 @@ public partial class CurrentViewModel : ObservableObject
     }
 
     private System.Timers.Timer RefreshTimer = new System.Timers.Timer(10000);
+
+    [ObservableProperty]
+    private static bool _IsRefreshing;
 
     [ObservableProperty]
     public static CurrentReport _CurrentReport = new CurrentReport();
@@ -50,6 +55,8 @@ public partial class CurrentViewModel : ObservableObject
     [RelayCommand]
     public async Task GetReport()
     {
+
+        IsRefreshing = true;
 
         // Create an instance of HttpClient
         using (HttpClient client = new HttpClient())
@@ -118,6 +125,10 @@ public partial class CurrentViewModel : ObservableObject
             {
                 // Handle any HTTP request exceptions
                 Console.WriteLine($"Request error: {e.Message}");
+            }
+            finally
+            {
+                IsRefreshing = false;
             }
         }
     }
