@@ -421,8 +421,8 @@
                 Grid.Row="0"
                 Grid.Column="1"
                 Classes="Section">
-              <StackPanel>
-                <!--<TextBlock
+                <StackPanel>
+                    <!--<TextBlock
                 Grid.Row="0"
                 Grid.Column="0"
                 Margin="0,5,0,10"
@@ -430,40 +430,47 @@
                 VerticalAlignment="Center"
                 Foreground="{DynamicResource AccentTextColor}"
                 Text="RANGE" />-->
-                <Grid
-                    Margin="0"
-                    ColumnDefinitions="Auto, *, Auto"
-                    RowDefinitions="Auto">
-                    <Button
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Height="60"
-                        Width="120"
-                        VerticalContentAlignment="Center"
-                        Classes="Controls"
-                        Command="{Binding BackCommand}"
-                        Content="BACK" />
-                    <ComboBox
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        SelectedItem="{Binding SelectedOption}">
-                        <ComboBoxItem>Day</ComboBoxItem>
-                        <ComboBoxItem>Week</ComboBoxItem>
-                        <ComboBoxItem>Month</ComboBoxItem>
-                        <ComboBoxItem>Year</ComboBoxItem>
-                        <ComboBoxItem>All</ComboBoxItem>
-                    </ComboBox>
-                    <Button
-                        Grid.Row="0"
-                        Grid.Column="2"
-                        Height="60"
-                        Width="120"
-                        Classes="Controls"
-                        Command="{Binding NextCommand}"
-                        Content="NEXT"
-                        IsVisible="{Binding NextEnabled}" />
-                </Grid>
-              </StackPanel>
+                    <Grid
+                        Margin="0"
+                        ColumnDefinitions="Auto, *, Auto"
+                        RowDefinitions="Auto">
+                        <Button
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Width="120"
+                            Height="60"
+                            VerticalContentAlignment="Center"
+                            Classes="Controls"
+                            Command="{Binding BackCommand}"
+                            Content="BACK" />
+                        <!--<StackPanel Grid.Row="0" Grid.Column="1">
+                          <RadioButton GroupName="OptionsGroup" Content="Option 1" IsChecked="True" Margin="0,5"/>
+                          <RadioButton GroupName="OptionsGroup" Content="Option 2" Margin="0,5"/>
+                          <RadioButton GroupName="OptionsGroup" Content="Option 3" Margin="0,5"/>
+                        </StackPanel>-->
+                        <ComboBox
+                             Grid.Row="0"
+                            Grid.Column="1"
+                             Width="200"
+                          HorizontalAlignment="Left"
+                            SelectedIndex="{Binding SelectedOption}" >
+                          <ComboBoxItem>Day</ComboBoxItem>
+                          <ComboBoxItem>Week</ComboBoxItem>
+                          <ComboBoxItem>Month</ComboBoxItem>
+                          <ComboBoxItem>Year</ComboBoxItem>
+                          <ComboBoxItem>All</ComboBoxItem>
+                        </ComboBox>
+                        <Button
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            Width="120"
+                            Height="60"
+                            Classes="Controls"
+                            Command="{Binding NextCommand}"
+                            Content="NEXT"
+                            IsVisible="{Binding NextEnabled}" />
+                    </Grid>
+                </StackPanel>
             </Border>
         </StackPanel>
     </ScrollViewer>

@@ -4,7 +4,7 @@ using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Platform;
-using Avalonia.Themes.Fluent;
+//using Avalonia.Themes.Fluent;
 using HomeWeatherHub.ViewModels;
 using HomeWeatherHub.Views;
 using System;
@@ -66,10 +66,20 @@ public partial class App : Application
         if (isLightMode)
         {
             // Load Light Theme
-            this.Styles[0] = new StyleInclude(new Uri("avares://HomeWeatherHub/"))
+            if (this.Styles.Count == 0 )
             {
-                Source = new Uri("avares://HomeWeatherHub/Styles/Light.axaml")
-            };
+                this.Styles.Add(new StyleInclude(new Uri("avares://HomeWeatherHub/"))
+                {
+                    Source = new Uri("avares://HomeWeatherHub/Styles/Light.axaml")
+                });
+            }
+            else
+            {
+                this.Styles[0] = new StyleInclude(new Uri("avares://HomeWeatherHub/"))
+                {
+                    Source = new Uri("avares://HomeWeatherHub/Styles/Light.axaml")
+                };
+            }
         }
         else
         {

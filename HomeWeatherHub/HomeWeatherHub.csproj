@@ -9,14 +9,6 @@
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
 
-  <!--<ItemGroup>
-    <AvaloniaXaml Remove="Views\StationsView.axaml" />
-  </ItemGroup>-->
-
-  <!--<ItemGroup>
-    <AvaloniaXaml Remove="Views\CurrentView.axaml" />
-  </ItemGroup>-->
-
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.2.2" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.2" />
@@ -41,7 +33,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\StationsView.axaml">
+    <Page Include="Views\SettingsView.axaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -59,7 +51,10 @@
     <Compile Update="Views\HistoryView.axaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>HistoryView.axaml</DependentUpon>
-    </Compile>    
+    </Compile>
+    <Compile Update="Views\SettingsView.axaml.cs">
+      <DependentUpon>SettingsView.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

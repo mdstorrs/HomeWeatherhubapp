@@ -1,6 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Themes.Fluent;
+//using Avalonia.Themes.Fluent;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Avalonia.Markup.Xaml.Styling;
@@ -26,7 +26,7 @@ public partial class HistoryViewModel : ObservableObject
     
     public HistoryViewModel() 
     {
-
+        SelectedOption = (int)dateMode.day;
         if (!Design.IsDesignMode)
         {
             Task.Run(async () => await GetReport());
@@ -57,7 +57,7 @@ public partial class HistoryViewModel : ObservableObject
     public static bool _NextEnabled = false;
 
     [ObservableProperty]
-    private string _SelectedOption;
+    private int _SelectedOption;
 
     [RelayCommand]
     public async Task Back() 
@@ -154,11 +154,10 @@ public partial class HistoryViewModel : ObservableObject
     {
 
         int addDate = this.AddDate; //The number of days back from this date.
-        dateMode mode = dateMode.day; //Day, Week, Month, Year, All
+        dateMode mode = (dateMode)SelectedOption; // dateMode.day; //Day, Week, Month, Year, All
 
         //mode = int.Parse(this.ddlRange.SelectedValue);
         //if (int.TryParse(Master.Request.QueryString["add"], out addDate)) { this.AddDate = addDate; } else { this.AddDate = 0; }
-
 
         switch (mode)
         {

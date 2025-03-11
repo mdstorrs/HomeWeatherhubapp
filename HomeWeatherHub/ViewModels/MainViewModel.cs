@@ -1,6 +1,6 @@
 ﻿ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Themes.Fluent;
+//using Avalonia.Themes.Fluent;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Avalonia.Markup.Xaml.Styling;
@@ -29,7 +29,6 @@ public partial class MainViewModel : ObservableObject
         {
             GlobalSettings.SettingsHelper.SettingsChangedEvent += OnSettingsChanged;
             GlobalSettings.SettingsHelper.LoadSettings();
-
         }
     }
 
@@ -42,14 +41,19 @@ public partial class MainViewModel : ObservableObject
     public StationsView? stationsView { get; set; }
     public CurrentView? currentView { get; set; }
     public HistoryView? historyView { get; set; }
+    public SettingsView? settingsView { get; set; }
 
     // Event handler that will be called when the event is fired
     private void OnSettingsChanged(object? sender, EventArgs e)
     {
         if (GlobalSettings.Settings.StationID == -1)
+        {
             ShowStations();
+        }
         else
+        {
             ShowCurrent();
+        }
     }
 
     [RelayCommand]
@@ -59,7 +63,7 @@ public partial class MainViewModel : ObservableObject
         {
             stationsView = new StationsView()
             {
-                DataContext = new StationsViewModel()
+                //DataContext = new StationsViewModel()
             };
         }
         CurrentControl = stationsView;
@@ -73,7 +77,7 @@ public partial class MainViewModel : ObservableObject
         {
             currentView = new CurrentView()
             {
-                DataContext = new CurrentViewModel()
+                //DataContext = new CurrentViewModel()
             };
         }
         CurrentControl = currentView;
@@ -87,7 +91,7 @@ public partial class MainViewModel : ObservableObject
         {
             historyView = new HistoryView()
             {
-                DataContext = new HistoryViewModel()
+                //DataContext = new HistoryViewModel()
             };
         }
         CurrentControl = historyView;
@@ -97,7 +101,15 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     public void ShowSettings()
     {
-
+        if (settingsView == null)
+        {
+            settingsView = new SettingsView()
+            {
+                //DataContext = new SettingsViewModel()
+            };
+        }
+        CurrentControl = settingsView;
+        HasStationID = (GlobalSettings.Settings.StationID != -1);
     }
 
 }

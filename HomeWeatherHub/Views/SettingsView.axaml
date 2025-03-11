@@ -1,5 +1,5 @@
 <UserControl
-    x:Class="HomeWeatherHub.Views.StationsView"
+    x:Class="HomeWeatherHub.Views.SettingsView"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,7 @@
     xmlns:vm="clr-namespace:HomeWeatherHub.ViewModels"
     d:DesignHeight="800"
     d:DesignWidth="600"
-    x:DataType="vm:StationsViewModel"
+    x:DataType="vm:SettingsViewModel"
     Background="{DynamicResource BackgroundColor}"
     mc:Ignorable="d">
     <Design.DataContext>
@@ -15,14 +15,15 @@
             This only sets the DataContext for the previewer in an IDE,
             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
         -->
-        <vm:StationsViewModel />
+      <vm:SettingsViewModel />
     </Design.DataContext>
     <UserControl.DataContext>
-        <vm:StationsViewModel />
+      <vm:SettingsViewModel />
     </UserControl.DataContext>
   <ScrollViewer Padding="0,8,0,8">
     <StackPanel MinWidth="300" MaxWidth="600">
       <Border
+        x:Name="Border1"
         Grid.Row="0"
         Grid.Column="1"
         Padding="0,12,0,10"
@@ -36,37 +37,10 @@
               HorizontalAlignment="Center"
               Classes="Heading"
               Foreground="{DynamicResource AccentTextColor}"
-              Text="Local Weather Stations" />
+              Text="Settings" />
         </Grid>
       </Border>
-      <!-- ItemsSource="{Binding Stations}"-->
-      <ItemsControl x:Name="lstStations">
-        <ItemsControl.ItemTemplate>
-          <DataTemplate>
-            <Button
-                MaxWidth="600"
-                HorizontalAlignment="Stretch"
-                Classes="FullWidth"
-                Command="{Binding DataContext.ChangeStationCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                CommandParameter="{Binding}">
-              <StackPanel>
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    Foreground="{DynamicResource AccentTextColor}"
-                    Text="{Binding Name}" />
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    Text="{Binding Address}" />
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    FontSize="10"
-                    Text="{Binding Coordinates}" />
-              </StackPanel>
-            </Button>
-          </DataTemplate>
-        </ItemsControl.ItemTemplate>
-      </ItemsControl>
       <ProgressBar Width="200" Height="10" IsIndeterminate="{Binding IsRefreshing}" />
     </StackPanel>
   </ScrollViewer>
-</UserControl>
+  </UserControl>

@@ -99,6 +99,53 @@
         <Setter Property="Margin" Value="0,0,0,5" />
     </Style>
 
+  <Style Selector="ComboBox">
+    <Setter Property="FontSize" Value="14"/>
+    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <Grid>
+             <!--ComboBox Background--> 
+            <Border Background="{DynamicResource ButtonBackgroundColor}"
+                    BorderBrush="{DynamicResource ButtonBorderColor}">
+
+               <!--Content and Toggle Button--> 
+              <Grid ColumnDefinitions="*,Auto">
+                <ContentPresenter Content="{TemplateBinding SelectedItem}"
+                                  Margin="{TemplateBinding Padding}"
+                                  VerticalAlignment="Center"/>
+
+                 <!--Dropdown Icon--> 
+                <ToggleButton Name="PART_DropDown"
+                              Grid.Column="1">
+                  <Path Data="M0,0 L5,5 L10,0"
+                        Stretch="Uniform"
+                        Stroke="{DynamicResource ButtonBorderColor}"
+                        StrokeThickness="1"/>
+                </ToggleButton>
+              </Grid>
+            </Border>
+
+             <!--Popup for Dropdown--> 
+            <Popup Name="PART_Popup"
+                   PlacementTarget="{TemplateBinding TemplatedParent}"
+                   PlacementMode="Bottom">
+              <Border Background="{DynamicResource ButtonBackgroundColor}"
+                      BorderBrush="{DynamicResource ButtonBorderColor}"
+                      BorderThickness="1"
+                      CornerRadius="4">
+                <ScrollViewer>
+                  <ItemsPresenter/>
+                </ScrollViewer>
+              </Border>
+            </Popup>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
     <Style Selector="TextBlock.Heading">
         <Setter Property="FontSize" Value="32" />
         <Setter Property="Foreground" Value="{DynamicResource AccentTextColor}" />
